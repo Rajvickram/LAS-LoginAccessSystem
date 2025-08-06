@@ -57,7 +57,23 @@ namespace LoginAccessSystem.Controllers
         public IActionResult Login(User user)
         {
             var checkUser = _context.Users
+                .FirstOrDefault(u => u.Email == user.Email && u.password == user.password);
 
+            if (checkUser != null)
+            {
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                ViewBag.Error = "Invalid Email or Password";
+                return View();
+            }
+        }
+
+        // GET :- Dashboard :-
+        public IActionResult Dashboard()
+        {
+            return View();
         }
     }
 }
